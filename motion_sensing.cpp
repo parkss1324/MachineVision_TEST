@@ -8,7 +8,7 @@ int main() {
     // 카메라 열기
     VideoCapture cap(0);
     if (!cap.isOpened()) {
-        std::cerr << "cap open failed" << std::endl;
+        cerr << "cap open failed" << endl;
         return -1;
     }
 
@@ -24,7 +24,7 @@ int main() {
         bool ret3 = cap.read(img03);
 
         if (!ret1 || !ret2 || !ret3) {
-            std::cerr << "can't read cap" << std::endl;
+            cerr << "can't read cap" << endl;
             break;
         }
 
@@ -54,7 +54,7 @@ int main() {
         imshow("motion sensing", diff);
 
         // 차이 비트 수 출력
-        std::cout << diff_cnt << std::endl;
+        cout << diff_cnt << endl;
 
         // ESC 키를 누르면 종료
         if (waitKey(1) == 27) {
