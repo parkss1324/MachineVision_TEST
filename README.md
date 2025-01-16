@@ -5,5 +5,5 @@
 - **박성수** 
 
 ## 💻 기술 스택 및 개발 환경
-- **기술 스택** : Python, OpenCV
+- **기술 스택** : C++, Python, OpenCV
 - **소프트웨어** : Visual Studio Code
