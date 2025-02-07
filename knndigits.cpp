@@ -77,17 +77,18 @@ Ptr<KNearest> train_knn()
 	return knn; // 학습된 knn 스마트 포인터를 반환
 }
 
-Point ptPrev(-1, -1);
+Point ptPrev(-1, -1); 
 
 void on_mouse(int event, int x, int y, int flags, void* userdata)
 {
 	Mat img = *(Mat*)userdata;
 
-	if (event == EVENT_LBUTTONDOWN) {
+	if (event == EVENT_LBUTTONDOWN) { // 마우스 왼쪽 버튼을 누른 위치를 ptPrev에 저장
 		ptPrev = Point(x, y);
-	} else if (event == EVENT_LBUTTONUP) {
+	} else if (event == EVENT_LBUTTONUP) { // 마우스 왼쪽 버튼을 떼면 ptPrev의 좌표를 (-1, -1)로 초기화
 		ptPrev = Point(-1, -1);
-	} else if (event == EVENT_MOUSEMOVE && (flags & EVENT_FLAG_LBUTTON)) {
+	} else if (event == EVENT_MOUSEMOVE && (flags & EVENT_FLAG_LBUTTON)) { 
+		// 마우스 왼쪽 버튼을 누른 상태로 마우스가 움직이면, ptPrev 좌표부터 (x, y) 좌표까지 직선을 그림, 그리고 ptPrev 좌표를 (x, y)로 변경
 		line(img, ptPrev, Point(x, y), Scalar::all(255), 40, LINE_AA, 0);
 		ptPrev = Point(x, y);
 
