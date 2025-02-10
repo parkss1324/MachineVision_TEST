@@ -10,14 +10,14 @@ void on_mouse(int event, int x, int y, int flags, void* userdata);
 
 int main()
 {
-	Ptr<KNearest> knn = train_knn();
+	Ptr<KNearest> knn = train_knn(); // 학습한 결과를 knn에 저장
 
 	if (knn.empty()) {
 		cerr << "Training failed!" << endl;
 		return -1;
 	}
 
-	Mat img = Mat::zeros(400, 400, CV_8U);
+	Mat img = Mat::zeros(400, 400, CV_8U); // 마우스 글씨를 쓰고 숫자를 인식할 영상 생성
 
 	imshow("img", img);
 	setMouseCallback("img", on_mouse, (void*)&img);
@@ -27,18 +27,21 @@ int main()
 		
 		if (c == 27) {
 			break;
-		} else if (c == ' ') {
+		} else if (c == ' ') { // 키보드에 스페이스 키를 누르면 필기체 숫자 인식을 수행
 			Mat img_resize, img_float, img_flatten, res;
 
-			resize(img, img_resize, Size(20, 20), 0, 0, INTER_AREA);
-			img_resize.convertTo(img_float, CV_32F);
-			img_flatten = img_float.reshape(1, 1);
+			// 숫자가 쓰여진 img 영상을 20 x 20으로 변환하여 img_resize에 저장
+			resize(img, img_resize, Size(20, 20), 0, 0, INTER_AREA); 
+			img_resize.convertTo(img_float, CV_32F); // img_resize를 영상을 float로 변환
 
-			knn->findNearest(img_flatten, 3, res);
-			cout << cvRound(res.at<float>(0, 0)) << endl;
+			// 20 x 20 img_float 영상을 400 x 1 크기의영상으로 변환하여 img_flatten에 저장
+			img_flatten = img_float.reshape(1, 1); 
 
-			img.setTo(0);
-			imshow("img", img);
+			knn->findNearest(img_flatten, 3, res); // kNN 알고리즘으로 분류한 결과
+			cout << cvRound(res.at<float>(0, 0)) << endl; // 콘솔 창에 출력
+
+			img.setTo(0); // img 영상을 검은색으로 초기화
+			imshow("img", img); // img 영상을 화면에 나타냄
 		} 
 	}
 
